@@ -29,6 +29,8 @@ class App extends Component {
 
 class News extends Component {
   _isMounted = false;
+  // throttle time
+  ms = 2000;
 
   constructor(props) {
     super(props);
@@ -43,6 +45,7 @@ class News extends Component {
 
     axios
       .get('https://hn.algolia.com/api/v1/search?query=react')
+      .then(response => new Promise(res => setTimeout(() => res(response), this.ms)))
       .then(result => {
         if (this._isMounted) {
           this.setState({
